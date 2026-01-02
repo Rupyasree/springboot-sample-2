@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>SkyCart - Fashion Store</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+	<style>
+		* {
+			box-sizing: border-box;
+		}
+
+		body {
+			font-family: Verdana, sans-serif;
+			margin: 0;
+			margin-top: 0;
+			background-image: url("Screenshot 2025-09-16 190728.png");
+		}
+
+		.header {
+			background: pink;
+			padding: 10px 20px;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			height: 90px;
+			margin-top: 0;
+			width: 1550px;
+		}
+
+		.logo {
+			font-size: 24px;
+			font-weight: bold;
+		}
+
+		.search-box {
+			padding: 8px;
+			width: 350px;
+			border-radius: 30px;
+			border: 1px solid #ccc;
+		}
+
+		.nav-right {
+			display: flex;
+			align-items: center;
+			gap: 15px;
+		}
+
+		.logout-btn {
+			background-color: #ff69b4;
+			color: white;
+			border: none;
+			padding: 8px 16px;
+			border-radius: 30px;
+			cursor: pointer;
+		}
+
+		.cart {
+			font-size: 18px;
+		}
+
+		.nav {
+			display: flex;
+			justify-content: center;
+			gap: 40px;
+			background-color: #ffe6f0;
+			padding: 15px 0;
+			border-radius: 30px;
+			box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+		}
+
+		.nav a {
+			text-decoration: none;
+			color: #ff1493;
+			font-size: 18px;
+			font-weight: 500;
+			transition: all 0.3s ease;
+			position: relative;
+		}
+
+		.nav a:hover {
+			color: black;
+		}
+
+		.nav a::after {
+			content: "";
+			display: block;
+			height: 3px;
+			width: 0;
+			background: #ff1493;
+			transition: 0.3s;
+			margin: auto;
+			border-radius: 10px;
+		}
+
+		.nav a:hover::after {
+			width: 90%;
+		}
+
+		.wishlist-header {
+		  text-align: center;
+		  padding: 40px 20px;
+		  background: #fff;
+		  border-bottom: 2px solid #f8c8dc;
+		  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+		  border-radius: 0 0 25px 25px;
+		}
+
+		.wishlist-header h1 {
+		  font-size: 32px;
+		  color: #d63384;
+		  margin: 0;
+		  display: flex;
+		  justify-content: center;
+		  align-items: center;
+		  gap: 10px;
+		  font-weight: 700;
+		  text-shadow: 0 3px 6px rgba(214, 51, 132, 0.3);
+		}
+
+		.wishlist-header i {
+		  color: #ff4d94;
+		  font-size: 28px;
+		}
+
+		/* Container */
+		.wishlist-container {
+		  width: 90%;
+		  max-width: 1000px;
+		  margin: 40px auto;
+		  background: #fff;
+		  border-radius: 20px;
+		  overflow: hidden;
+		  box-shadow: 0 20px 40px rgba(214, 51, 132, 0.15);
+		  transform: translateY(0);
+		  transition: all 0.4s ease;
+		}
+
+		.wishlist-container:hover {
+		  transform: translateY(-5px) scale(1.01);
+		  box-shadow: 0 25px 50px rgba(214, 51, 132, 0.25);
+		}
+
+		/* Table */
+		.wishlist-table {
+		  width: 100%;
+		  border-collapse: collapse;
+		}
+
+		.wishlist-table th,
+		.wishlist-table td {
+		  padding: 18px;
+		  text-align: left;
+		  border-bottom: 1px solid #f5d6e0;
+		}
+
+		.wishlist-table th {
+		  background: #fff0f5;
+		  font-weight: 600;
+		  color: #d63384;
+		  text-transform: uppercase;
+		  font-size: 14px;
+		}
+
+		/* Product Info */
+		.product-info {
+		  display: flex;
+		  align-items: center;
+		  gap: 15px;
+		}
+
+		.product-info img {
+		  width: 70px;
+		  height: 70px;
+		  object-fit: cover;
+		  border-radius: 12px;
+		  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+		  transition: transform 0.3s ease;
+		}
+
+		.product-info img:hover {
+		  transform: scale(1.1) rotate(-2deg);
+		}
+
+		/* Stock */
+		.stock {
+		  color: #28a745;
+		  font-weight: 600;
+		}
+
+		/* Buttons */
+		.add-btn, .remove-btn {
+		  padding: 10px 16px;
+		  border: none;
+		  border-radius: 12px;
+		  cursor: pointer;
+		  font-weight: 600;
+		  transition: all 0.3s ease;
+		  font-size: 14px;
+		}
+
+		.add-btn {
+		  background: linear-gradient(135deg, #ff85a2, #d63384);
+		  color: #fff;
+		  box-shadow: 0 5px 15px rgba(214, 51, 132, 0.3);
+		}
+
+		.add-btn:hover {
+		  background: linear-gradient(135deg, #d63384, #a61e4d);
+		  transform: translateY(-2px);
+		  box-shadow: 0 8px 20px rgba(214, 51, 132, 0.4);
+		}
+
+		.remove-btn {
+		  background: #fce4ec;
+		  color: #d63384;
+		}
+
+		.remove-btn:hover {
+		  background: #f8bbd0;
+		  transform: translateY(-2px);
+		}
+
+		/* Responsive */
+		@media screen and (max-width: 768px) {
+		  .wishlist-table th, .wishlist-table td {
+		    font-size: 12px;
+		    padding: 12px;
+		  }
+
+		  .product-info img {
+		    width: 50px;
+		    height: 50px;
+		  }
+
+		  .add-btn, .remove-btn {
+		    font-size: 12px;
+		    padding: 8px 12px;
+		  }
+		}
+
+	</style>
+</head>
+
+<body>
+
+	<!-- Header -->
+	<header class="header">
+		<div class="logo">🌸 SkyCart</div>
+		<input type="text" id="searchBox" placeholder="Search for Products" class="search-box" />
+		<div class="nav-right">
+
+			<button class="logout-btn" onclick="location.href='cart.html'">🛒 Cart</button>
+			<button class="logout-btn" onclick="location.href='wishlist.html'">❤️ Wishlist</button>
+			<button class="logout-btn" onclick="location.href='profile.html'">👤 Profile</button>
+			<button class="logout-btn" onclick="location.href='logout.html'">Logout</button>
+		</div>
+	</header>
+
+	<!-- Navigation -->
+	<nav class="nav">
+		<a href="product.html">Shop</a>
+		<a href="product.html">Categories</a>
+		<a href="deals.html">Deals</a>
+		<a href="about.html">About</a>
+		<a href="contact.html">Contact</a>
+	</nav>
+
+	<header class="wishlist-header">
+	   <h1><i class="fas fa-heart"></i> My Wishlist</h1>
+	 </header>
+
+	 <section class="wishlist-container">
+		<table class="wishlist-table">
+		  <thead>
+		    <tr>
+		      <th>Product</th>
+		      <th>Unit Price</th>
+		      <th>Status</th>
+		      <th>Action</th>
+		    </tr>
+		  </thead>
+		  <tbody id="wishlistBody">
+		    <!-- Products will load here -->
+		  </tbody>
+		</table>
+	 </section>
+
+
+	<!-- Scripts -->
+	<script>
+
+
+	    // ------------------ PRODUCTS (Dynamic + Add to Cart) ------------------
+	    async function loadProducts() {
+	        try {
+	            // Fetch products from backend
+	            const response = await fetch("http://localhost:8082/products/all");
+	            const products = await response.json();
+
+	            const grid = document.getElementById("productGrid");
+	            grid.innerHTML = ""; // Clear existing products
+
+	            products.forEach(product => {
+	                const card = document.createElement("div");
+	                card.classList.add("product-card");
+
+	                card.innerHTML = `
+	                    <img src="${product.imagePath}" alt="${product.name}">
+	                    <div class="product-info">
+	                        <h3>${product.name}</h3>
+	                        <p>${product.category?.name}</p>
+	                        <p><strong>₹${product.price}</strong></p>
+	                        <div class="badges">
+	                            <span class="badge available">Available</span>
+	                            <span class="badge personalize" onclick="addToCart(${product.id})">Add to Cart</span>
+								<span class="badge wishlist" onclick="addToWishlist(${product.id})">
+								  <i class="fas fa-heart"></i>
+								</span>
+
+	                    </div>
+	                `;
+	                grid.appendChild(card);
+	            });
+	        } catch (err) {
+	            console.error("Error fetching products:", err);
+	        }
+	    }
+
+	    // ------------------ SEARCH PRODUCTS ------------------
+	    async function searchProducts() {
+	        const keyword = document.getElementById("searchBox").value;
+	        const response = await fetch(`http://localhost:8082/products/search?keyword=${keyword}`);
+	        const products = await response.json();
+
+	        const grid = document.getElementById("productGrid");
+	        grid.innerHTML = "";
+
+	        products.forEach(product => {
+	            const card = document.createElement("div");
+	            card.classList.add("product-card");
+	            card.innerHTML = `
+	                <img src="${product.imagePath}" alt="${product.name}">
+	                <div class="product-info">
+	                    <h3>${product.name}</h3>
+	                    <p>${product.category?.name}</p>
+	                    <p><strong>₹${product.price}</strong></p>
+	                    <div class="badges">
+	                        <span class="badge available">Available</span>
+	                        <span class="badge personalize" onclick="addToCart(${product.id})">Add to Cart</span>
+							<span class="badge wishlist" onclick="addToWishlist(${product.id})">
+							  <i class="fas fa-heart"></i>
+							</span>
+
+	                    </div>
+	                </div>
+	            `;
+	            grid.appendChild(card);
+	        });
+	    }
+
+	    // Search on typing
+	    document.getElementById("searchBox").addEventListener("input", searchProducts);
+
+	    // ------------------ ADD TO CART ------------------
+		async function addToCart(productId) {
+		     try {
+		       const cartItem = { productId, quantity: 1, userId: "guest" };
+		       const params = new URLSearchParams(cartItem);
+
+		       const response = await fetch(`http://localhost:8082/cart/add?${params.toString()}`, {
+		         method: "POST"
+		       });
+
+		       if (!response.ok) {
+		         const err = await response.text();
+		         alert("❌ Failed to add item: " + err);
+		         return;
+		       }
+
+		       alert("✅ Product added to cart!");
+		       // 👉 Redirect to cart page
+		       window.location.href = "cart.html";
+
+		     } catch (err) {
+		       console.error("Error adding to cart:", err);
+		       alert("❌ Failed to add item: " + err.message);
+		     }
+		   }
+		   
+		   
+		   
+		   // ------------------ ADD TO WISHLIST ------------------
+		   async function addToWishlist(productId) {
+		     let wishlist = JSON.parse(localStorage.getItem("Wishlist")) || [];
+
+		     if (!wishlist.includes(productId)) {
+		       wishlist.push(productId);
+		       localStorage.setItem("wishlist", JSON.stringify(wishlist));
+		       alert("❤️ Product added to wishlist!");
+		     } else {
+		       alert("ℹ️ Product already in wishlist!");
+		     }
+
+		     loadWishlist(); // refresh table
+		   }
+		 
+
+		   // ------------------ LOAD WISHLIST ------------------
+		   async function loadWishlist() {
+		     let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+
+		     if (wishlist.length === 0) {
+		       document.getElementById("wishlistBody").innerHTML =
+		         "<tr><td colspan='4' style='text-align:center;'>Your wishlist is empty ❤️</td></tr>";
+		       return;
+		     }
+
+		     const response = await fetch("http://localhost:8082/products/all");
+		     const products = await response.json();
+		     const wishlistProducts = products.filter(p => wishlist.includes(p.id));
+
+		     const tbody = document.getElementById("wishlistBody");
+		     tbody.innerHTML = "";
+
+		     wishlistProducts.forEach(product => {
+		       const row = document.createElement("tr");
+
+		       row.innerHTML = `
+		        <td>
+				<img src="${product.imagePath}" alt="${product.name}">
+					                <div class="product-info">
+					                    <h3>${product.name}</h3>
+					                    <p>${product.category?.name}</p>
+					                    <p><strong>₹${product.price}</strong></p>
+					                    <div class="badges">
+					                        <span class="badge available">Available</span>
+					                        <span class="badge personalize" onclick="addToCart(${product.id})">Add to Cart</span>
+											<span class="badge wishlist" onclick="addToWishlist(${product.id})">
+											  <i class="fas fa-heart"></i>
+											</span>
+
+					                    </div>
+					                </div>
+		         </td>
+		       `;
+
+		       tbody.appendChild(row);
+		     });
+		   }
+
+		   // ------------------ REMOVE FROM WISHLIST ------------------
+		   function removeFromWishlist(productId) {
+		     let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+		     wishlist = wishlist.filter(id => id !== productId);
+		     localStorage.setItem("wishlist", JSON.stringify(wishlist));
+		     loadWishlist();
+		   }
+
+
+		   
+	    // ------------------ RUN ON PAGE LOAD ------------------
+	    window.onload = function () {
+	        showSlidesAuto();
+	        loadProducts();
+			loadWishlist();
+	    };
+	</script>
+
+
+</body>
+
+</html>
+<!-- Footer -->
+<footer
+	style="background-color: black; padding: 30px 20px; color: #333; text-align: center; margin-top: 50px; border-top: 2px solid #ff69b4; font-family: 'Segoe UI', sans-serif;">
+	<div style="max-width: 1200px; margin: auto;">
+		<div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 20px; text-align: left;">
+
+			<!-- About Section -->
+			<div style="flex: 1; min-width: 200px;">
+				<h3 style="color: #ff1493;">About SkyCart</h3>
+				<p style="color:#334;">SkyCart is your one-stop fashion store. We bring you the latest trends in beauty,
+					fashion, and lifestyle. Shop with confidence and elevate your style!</p>
+			</div>
+
+			<!-- Quick Links -->
+			<div style="flex: 1; min-width: 200px;">
+				<h3 style="color: #ff1493;">Quick Links</h3>
+				<ul style="list-style: none; padding: 0;">
+					<li><a href="product.html" style="color: pink; text-decoration: none;">Shop</a></li>
+					<li><a href="about.html" style="color: pink; text-decoration: none;">About Us</a></li>
+					<li><a href="contact.html" style="color: pink; text-decoration: none;">Contact</a></li>
+					<li><a href="wishlist.html" style="color: pink; text-decoration: none;">Wishlist</a></li>
+				</ul>
+			</div>
+
+			<!-- Social Media -->
+			<div style="flex: 1; min-width: 200px;">
+				<h3 style="color: #ff1493;">Follow Us</h3>
+				<p>
+					<a href="#" style="color: #ff1493; margin: 0 10px;"><i class="fab fa-facebook"></i></a>
+					<a href="#" style="color: #ff1493; margin: 0 10px;"><i class="fab fa-instagram"></i></a>
+					<a href="#" style="color: #ff1493; margin: 0 10px;"><i class="fab fa-twitter"></i></a>
+					<a href="#" style="color: #ff1493; margin: 0 10px;"><i class="fab fa-youtube"></i></a>
+				</p>
+			</div>
+
+		</div>
+
+		<hr style="margin: 20px 0; border-color: #ff69b4;">
+
+		<p style="margin: 0;">&copy; 2025 SkyCart. All rights reserved.</p>
+	</div>
+</footer>
+
+

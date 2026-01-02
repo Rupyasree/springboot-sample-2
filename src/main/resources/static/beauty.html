@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>SkyCart - Fashion Store</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+	<style>
+		* {
+			box-sizing: border-box;
+		}
+
+		body {
+			font-family: Verdana, sans-serif;
+			margin: 0;
+			margin-top: 0;
+			background: linear-gradient(135deg, pink, #333, lightblue, #333, pink);
+		}
+
+		.header {
+			background: pink;
+			padding: 10px 20px;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			height: 90px;
+			margin-top: 0;
+			width: 1520px;
+		}
+
+		.logo {
+			font-size: 24px;
+			font-weight: bold;
+		}
+
+		.search-box {
+			padding: 8px;
+			width: 360px;
+			border-radius: 30px;
+			border: 1px solid #ccc;
+		}
+
+		.nav-right {
+			display: flex;
+			align-items: center;
+			gap: 15px;
+		}
+
+		.logout-btn {
+			background-color: #ff69b4;
+			color: white;
+			border: none;
+			padding: 8px 16px;
+			border-radius: 30px;
+			cursor: pointer;
+		}
+
+		.cart {
+			font-size: 18px;
+		}
+
+		.nav {
+			display: flex;
+			justify-content: center;
+			gap: 40px;
+			background-color: #ffe6f0;
+			padding: 15px 0;
+			border-radius: 30px;
+			box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+		}
+
+		.nav a {
+			text-decoration: none;
+			color: #ff1493;
+			font-size: 18px;
+			font-weight: 500;
+			transition: all 0.3s ease;
+			position: relative;
+		}
+
+		.nav a:hover {
+			color: black;
+		}
+
+		.nav a::after {
+			content: "";
+			display: block;
+			height: 3px;
+			width: 0;
+			background: #ff1493;
+			transition: 0.3s;
+			margin: auto;
+			border-radius: 10px;
+		}
+
+		.nav a:hover::after {
+			width: 90%;
+		}
+
+		.banner {
+			background-image: url('Black\ and\ White\ Modern\ Simple\ Acne\ Serum\ Skincare\ Instagram\ Story.jpg');
+			background-size: cover;
+			background-position: center;
+			position: relative;
+			height: 80vh;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			color: white;
+			text-align: center;
+		}
+
+		.banner::before {
+			content: "";
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: rgba(0, 0, 0, 0.4);
+		}
+
+		.banner-content {
+			position: relative;
+			z-index: 1;
+		}
+
+		.banner h1 {
+			font-size: 3rem;
+			margin-bottom: 10px;
+		}
+
+		.banner p {
+			font-size: 1.2rem;
+			margin-bottom: 20px;
+		}
+
+		.banner-btn {
+			padding: 12px 30px;
+			background-color: hotpink;
+			color: white;
+			border: none;
+			border-radius: 30px;
+			font-size: 1rem;
+			text-decoration: none;
+			font-weight: bold;
+			transition: background 0.3s;
+		}
+
+		.banner-btn:hover {
+			background-color: deeppink;
+		}
+
+		/* Slideshow */
+		.slideshow-container {
+			max-width: 2000px;
+			position: relative;
+			margin: 50px auto;
+			border-radius: 50px;
+		}
+
+		.mySlides {
+			display: none;
+		}
+
+		.slide-img {
+			width: 100%;
+			height: 550px;
+			object-fit: cover;
+			border-radius: 1000px;
+		}
+
+		.prev,
+		.next {
+			cursor: pointer;
+			position: absolute;
+			top: 50%;
+			padding: 16px;
+			font-size: 18px;
+			color: white;
+			font-weight: bold;
+			user-select: none;
+			transition: 0.6s ease;
+		}
+
+		.prev {
+			left: 0;
+			border-radius: 0 3px 3px 0;
+		}
+
+		.next {
+			right: 0;
+			border-radius: 3px 0 0 3px;
+		}
+
+		.prev:hover,
+		.next:hover {
+			background-color: rgba(0, 0, 0, 0.8);
+		}
+
+		.dot {
+			cursor: pointer;
+			height: 15px;
+			width: 15px;
+			margin: 0 4px;
+			background-color: #bbb;
+			border-radius: 50%;
+			display: inline-block;
+			transition: background-color 0.6s ease;
+		}
+
+		.active,
+		.dot:hover {
+			background-color: #717171;
+		}
+
+		.thumbnails {
+			display: flex;
+			justify-content: center;
+			gap: 10px;
+			flex-wrap: wrap;
+			margin: 30px auto;
+		}
+
+		.thumbnail {
+			width: 900px;
+			height: 200px;
+			object-fit: cover;
+			border-radius: 10px;
+			opacity: 0.8;
+			transition: transform 0.3s, opacity 0.3s;
+		}
+
+		.thumbnail:hover {
+			transform: scale(1.05);
+			opacity: 1;
+		}
+
+		/* Products */
+		.product-grid {
+			display: flex;
+			gap: 24px;
+			flex-wrap: wrap;
+			max-width: 1200px;
+			margin: auto;
+			justify-content: center;
+		}
+
+		.product-card {
+			background: white;
+			border-radius: 20px;
+			box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+			width: 260px;
+			display: flex;
+			flex-direction: column;
+			overflow: hidden;
+			transition: transform 0.4s ease, box-shadow 0.4s ease;
+			transform-style: preserve-3d;
+			perspective: 1000px;
+			cursor: pointer;
+		}
+
+		.product-card:hover {
+			transform: scale(1.05) rotateX(5deg) rotateY(5deg);
+			box-shadow: 0 30px 50px rgba(0, 0, 0, 0.2);
+		}
+
+		.product-card img {
+			width: 100%;
+			object-fit: cover;
+			height: 180px;
+			transition: transform 0.4s ease;
+		}
+
+		.product-card:hover img {
+			transform: scale(1.05);
+		}
+
+		.product-info {
+			padding: 16px;
+			flex-grow: 1;
+		}
+
+		.product-info h3 {
+			font-size: 1.1rem;
+			margin: 0 0 8px 0;
+			color: #333;
+			font-weight: 600;
+			transition: color 0.3s;
+		}
+
+		.product-info p {
+			font-size: 0.9rem;
+			color: #777;
+			margin: 0 0 12px 0;
+		}
+
+		.badges {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 8px;
+		}
+
+		.badge {
+			font-size: 0.75rem;
+			padding: 5px 10px;
+			border-radius: 999px;
+			user-select: none;
+			font-weight: 500;
+			transition: transform 0.3s;
+		}
+
+		.badge:hover {
+			transform: scale(1.1);
+		}
+
+		.badge.available {
+			background: #e0f2ff;
+			color: #007acc;
+		}
+
+		.badge.personalize {
+			background: #ffdce0;
+			color: #d6336c;
+		}
+
+		.badge.gift {
+			background: #f4e9f4;
+			color: #7e4a7c;
+		}
+
+		.badge.printing {
+			background: #f1efe5;
+			color: #8a775f;
+		}
+
+		@media screen and (max-width: 768px) {
+			.product-card {
+				width: 90%;
+			}
+		}
+
+
+		.custom-video {
+			width: 100%;
+			/* or use a fixed size like 600px */
+			height: 520px;
+			/* adjust as needed */
+			border-radius: 50px;
+			/* optional, for rounded corners */
+			display: block;
+			margin: 0 auto;
+			/* centers the video horizontally */
+			object-fit: cover;
+		}
+
+		.custom-video1 {
+			width: 100%;
+			/* or use a fixed size like 600px */
+			height: 580px;
+			/* adjust as needed */
+			border-radius: 150px;
+			/* optional, for rounded corners */
+			display: block;
+			margin: 0 auto;
+			/* centers the video horizontally */
+			object-fit: cover;
+		}
+	</style>
+</head>
+
+<body>
+
+	<!-- Header -->
+	<header class="header">
+		<div class="logo">🌸 SkyCart</div>
+		<input type="text" id="searchBox" placeholder="Search for Products" class="search-box" />
+
+		<div class="nav-right">
+			<div class="cart">🛒 Cart</div>
+			<a href="wishlist.html" class="icon">❤️ Wishlist</a>
+			<a href="profile.html" class="icon">👤 Profile</a>
+			<button class="logout-btn" onclick="location.href='logout.html'">Logout</button>
+		</div>
+	</header>
+
+	<!-- Navigation -->
+	<nav class="nav">
+		<a href="product.html">Shop</a>
+		<a href="product.html">Categories</a>
+		<a href="deals.html">Deals</a>
+		<a href="about.html">About</a>
+		<a href="contact.html">Contact</a>
+	</nav>
+
+	<video autoplay muted loop id="myVideo" class="custom-video">
+		<source src="Blue White Minimalist Beauty Product Ads Video.mp4" type="video/mp4">
+		Your browser does not support HTML5 video.
+	</video>
+
+
+	<!-- Slideshow -->
+	<div class="slideshow-container">
+		<div class="mySlides fade">
+			<img src="fash.png" class="slide-img" alt="Slide 3">
+		</div>
+		<div class="mySlides fade">
+			<img src="Peach and White Minimalist Beauty Skincare Product YouTube Thumbnail.png" class="slide-img"
+				alt="Slide 2">
+		</div>
+		<div class="mySlides fade">
+			<img src="Modern.png" class="slide-img" alt="Slide 3">
+		</div>
+		<a class="prev" onclick="plusSlides(-1)">❮</a>
+		<a class="next" onclick="plusSlides(1)">❯</a>
+	</div>
+
+	<!-- Dots -->
+	<div style="text-align:center; margin-top: 10px;">
+		<span class="dot" onclick="currentSlide(1)"></span>
+		<span class="dot" onclick="currentSlide(2)"></span>
+		<span class="dot" onclick="currentSlide(3)"></span>
+	</div>
+
+	<!-- Banner -->
+	<section class="banner" style="height:300px">
+		<div class="banner-content">
+			<h1>serums</h1>
+			<p>Discover the latest serums in skycart</p>
+			<a href="product.html"></a>
+		</div>
+	</section></br>
+
+
+
+	<!-- Product Section -->
+		<section class="products">
+			<h2>Our Products</h2>
+			<div id="productGrid" class="product-grid"></div>
+		</section>
+
+		<!-- Thumbnails -->
+		<div class="thumbnails">
+			<a href="beauty.html">
+				<img src="Black and White Modern Simple Acne Serum Skincare Instagram Story.jpg" alt="Beauty"
+					class="thumbnail">
+			</a>
+
+			<a href="accessories.html">
+				<img src="Modern.png" alt="Accessories" class="thumbnail">
+			</a>
+
+		</div>
+
+		<video autoplay muted loop id="myVideo" class="custom-video1">
+			<source src="Cream Pink Minimalist Beauty Makeup Tips  Video.mp4" type="video/mp4">
+			Your browser does not support HTML5 video.
+		</video>
+
+		<!-- Scripts -->
+		<script>
+			let slideIndex = 0;
+			let autoSlideTimer;
+			function showSlidesAuto() {
+				const slides = document.getElementsByClassName("mySlides");
+				const dots = document.getElementsByClassName("dot");
+
+				for (let slide of slides) slide.style.display = "none";
+				slideIndex++;
+				if (slideIndex > slides.length) slideIndex = 1;
+
+				for (let dot of dots) dot.classList.remove("active");
+				slides[slideIndex - 1].style.display = "block";
+				dots[slideIndex - 1].classList.add("active");
+
+				autoSlideTimer = setTimeout(showSlidesAuto, 3000);
+			}
+
+			function plusSlides(n) {
+				clearTimeout(autoSlideTimer);
+				showSlidesManual(slideIndex += n);
+			}
+
+			function currentSlide(n) {
+				clearTimeout(autoSlideTimer);
+				showSlidesManual(slideIndex = n);
+			}
+
+			function showSlidesManual(n) {
+				const slides = document.getElementsByClassName("mySlides");
+				const dots = document.getElementsByClassName("dot");
+
+				if (n > slides.length) slideIndex = 1;
+				if (n < 1) slideIndex = slides.length;
+
+				for (let slide of slides) slide.style.display = "none";
+				for (let dot of dots) dot.classList.remove("active");
+
+				slides[slideIndex - 1].style.display = "block";
+				dots[slideIndex - 1].classList.add("active");
+
+				autoSlideTimer = setTimeout(showSlidesAuto, 3000);
+			}
+
+			// ------------------ PRODUCTS (Dynamic + Add to Cart) ------------------
+			async function loadProducts() {
+			        try {
+			            // Fetch products from backend
+						const response = await fetch("http://localhost:8082/products/category/id/6");
+
+			            const products = await response.json();
+
+			            const grid = document.getElementById("productGrid");
+			            grid.innerHTML = ""; // Clear existing products
+
+			            products.forEach(product => {
+			                const card = document.createElement("div");
+			                card.classList.add("product-card");
+
+			                card.innerHTML = `
+			                    <img src="${product.imagePath}" alt="${product.name}">
+			                    <div class="product-info">
+			                        <h3>${product.name}</h3>
+			                        <p>${product.category?.name}</p>
+			                        <p><strong>₹${product.price}</strong></p>
+			                        <div class="badges">
+			                            <span class="badge available">Available</span>
+			                            <span class="badge personalize" onclick="addToCart(${product.id})">Add to Cart</span>
+			                            <span class="badge gift">Gift</span>
+			                        </div>
+			                    </div>
+			                `;
+			                grid.appendChild(card);
+			            });
+			        } catch (err) {
+			            console.error("Error fetching products:", err);
+			        }
+			    }
+
+			    // ------------------ SEARCH PRODUCTS ------------------
+			    async function searchProducts() {
+			        const keyword = document.getElementById("searchBox").value;
+			        const response = await fetch(`http://localhost:8082/products/search?keyword=${keyword}`);
+			        const products = await response.json();
+
+			        const grid = document.getElementById("productGrid");
+			        grid.innerHTML = "";
+
+			        products.forEach(product => {
+			            const card = document.createElement("div");
+			            card.classList.add("product-card");
+			            card.innerHTML = `
+			                <img src="${product.imagePath}" alt="${product.name}">
+			                <div class="product-info">
+			                    <h3>${product.name}</h3>
+			                    <p>${product.category?.name}</p>
+			                    <p><strong>₹${product.price}</strong></p>
+			                    <div class="badges">
+			                        <span class="badge available">Available</span>
+			                        <span class="badge personalize" onclick="addToCart(${product.id})">Add to Cart</span>
+			                        <span class="badge gift">Gift</span>
+			                    </div>
+			                </div>
+			            `;
+			            grid.appendChild(card);
+			        });
+			    }
+
+			    // Search on typing
+			    document.getElementById("searchBox").addEventListener("input", searchProducts);
+
+			    // ------------------ ADD TO CART ------------------
+				async function addToCart(productId) {
+				     try {
+				       const cartItem = { productId, quantity: 1, userId: "guest" };
+				       const params = new URLSearchParams(cartItem);
+
+				       const response = await fetch(`http://localhost:8082/cart/add?${params.toString()}`, {
+				         method: "POST"
+				       });
+
+				       if (!response.ok) {
+				         const err = await response.text();
+				         alert("❌ Failed to add item: " + err);
+				         return;
+				       }
+
+				       alert("✅ Product added to cart!");
+				       // 👉 Redirect to cart page
+				       window.location.href = "cart.html";
+
+				     } catch (err) {
+				       console.error("Error adding to cart:", err);
+				       alert("❌ Failed to add item: " + err.message);
+				     }
+				   }
+				   // ------------------ RUN ON PAGE LOAD ------------------
+				       window.onload = function () {
+				           showSlidesAuto();
+				           loadProducts();
+				       };
+		</script>
+</body>
+
+</html>
+
+<!-- Footer -->
+<footer
+	style="background-color: black; padding: 30px 40px; color: #333; text-align: center; margin-top: 50px; border-top: 2px solid #ff69b4; font-family: 'Segoe UI', sans-serif;">
+	<div style="max-width: 1200px; margin: auto;">
+		<div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 20px; text-align: left;">
+
+			<!-- About Section -->
+			<div style="flex: 1; min-width: 200px;">
+				<h3 style="color: #ff1493;">About SkyCart</h3>
+				<p style="color:#334;">SkyCart is your one-stop fashion store. We bring you the latest trends in beauty,
+					fashion, and lifestyle. Shop with confidence and elevate your style!</p>
+			</div>
+
+			<!-- Quick Links -->
+			<div style="flex: 1; min-width: 200px;">
+				<h3 style="color: #ff1493;">Quick Links</h3>
+				<ul style="list-style: none; padding: 0;">
+					<li><a href="product.html" style="color: pink; text-decoration: none;">Shop</a></li>
+					<li><a href="about.html" style="color: pink; text-decoration: none;">About Us</a></li>
+					<li><a href="contact.html" style="color: pink; text-decoration: none;">Contact</a></li>
+					<li><a href="wishlist.html" style="color: pink; text-decoration: none;">Wishlist</a></li>
+				</ul>
+			</div>
+
+			<!-- Social Media -->
+			<div style="flex: 1; min-width: 200px;">
+				<h3 style="color: #ff1493;">Follow Us</h3>
+				<p>
+					<a href="#" style="color: #ff1493; margin: 0 10px;"><i class="fab fa-facebook"></i></a>
+					<a href="#" style="color: #ff1493; margin: 0 10px;"><i class="fab fa-instagram"></i></a>
+					<a href="#" style="color: #ff1493; margin: 0 10px;"><i class="fab fa-twitter"></i></a>
+					<a href="#" style="color: #ff1493; margin: 0 10px;"><i class="fab fa-youtube"></i></a>
+				</p>
+			</div>
+
+		</div>
+
+		<hr style="margin: 20px 0; border-color: #ff69b4;">
+
+		<p style="margin: 0;">&copy; 2025 SkyCart. All rights reserved.</p>
+	</div>
+</footer>

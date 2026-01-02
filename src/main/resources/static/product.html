@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>Product Grid</title>
+	<style>
+		.product-grid {
+			display: flex;
+			gap: 20px;
+			flex-wrap: wrap;
+			max-width: 1200px;
+			margin: 0 auto;
+		}
+
+		.product-card {
+
+			border-radius: 8px;
+			box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+			width: 250px;
+			display: flex;
+			flex-direction: column;
+			overflow: hidden;
+			transition: transform 0.4s ease, box-shadow 0.4s ease;
+			cursor: pointer;
+		}
+
+		.product-card:hover {
+			transform: scale(1.05);
+			box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+		}
+
+		.product-card img {
+			width: 100%;
+			object-fit: cover;
+			height: 160px;
+			transition: transform 0.4s ease;
+		}
+
+		.product-card:hover img {
+			transform: scale(1.05);
+		}
+
+		.product-info {
+			padding: 12px 15px;
+			flex-grow: 1;
+		}
+
+		.product-info h3 {
+			font-size: 1.1rem;
+			margin: 0 0 6px 0;
+			font-weight: 600;
+			color: #333;
+			transition: color 0.3s ease;
+		}
+
+		.product-card:hover .product-info h3 {
+			color: #2a6edb;
+		}
+
+		.product-info p {
+			font-size: 0.9rem;
+			color: #666;
+			margin: 0 0 12px 0;
+		}
+
+		.badges {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 6px;
+		}
+
+		.badge {
+			font-size: 0.75rem;
+			padding: 5px 10px;
+			border-radius: 12px;
+			user-select: none;
+			transition: background 0.3s, color 0.3s, transform 0.3s;
+			cursor: pointer;
+		}
+
+		.product-card:hover .badge {
+			transform: scale(1.05);
+		}
+
+		.badge:hover {
+			background-color: #000;
+			color: #fff;
+		}
+
+		.badge.available {
+			background: #d0e8ff;
+			color: #2a6edb;
+		}
+
+		.badge.personalize {
+			background: #f7d4d6;
+			color: #b3474b;
+		}
+
+		.badge.gift {
+			background: #ece3e6;
+			color: #7a656a;
+		}
+
+		.badge.printing {
+			background: #e8e5dc;
+			color: #7a725d;
+		}
+
+		.image-wrapper {
+			display: flex;
+			justify-content: center;
+			margin: 30px 0;
+			border-radius: 30px;
+			width: 100%;
+			height: 1001px;
+			border: #ff1493;
+			margin-left: 0%;
+		}
+
+		body {
+			margin: 0;
+			font-family: Arial, sans-serif;
+			background: #fff;
+			max-width: 100%;
+			overflow-x: hidden;
+		}
+
+		.header {
+			background-color: #ffc0cb;
+			/* Soft pink */
+			padding: 12px 24px;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			height: 60px;
+			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+		}
+
+		.logo {
+			font-size: 24px;
+			font-weight: bold;
+			display: flex;
+			align-items: center;
+		}
+
+		.logo::before {
+			/* content: "🌸";*/
+			margin-right: 8px;
+			font-size: 24px;
+		}
+
+		.search-box {
+			flex: 1;
+			margin: 0 1rem;
+			padding: 0.5rem 1rem;
+			border-radius: 20px;
+			border: none;
+			max-width: 400px;
+		}
+
+		.nav-right {
+			display: flex;
+			align-items: center;
+			gap: 20px;
+		}
+
+		.logout-btn {
+			background-color: #ff69b4;
+			/* Hot pink */
+			color: white;
+			border: none;
+			padding: 8px 20px;
+			border-radius: 30px;
+			cursor: pointer;
+			font-size: 15px;
+			transition: background 0.3s ease;
+		}
+
+		.logout-btn:hover {
+			background-color: #ff1493;
+			/* Deeper pink on hover */
+		}
+
+		.cart {
+			font-size: 16px;
+			display: flex;
+			align-items: center;
+			gap: 5px;
+		}
+
+
+
+
+
+		.logout-btn {
+			background-color: #ff69b4;
+			color: white;
+			border: none;
+			padding: 8px 20px;
+			border-radius: 30px;
+			cursor: pointer;
+			font-size: 15px;
+			transition: background 0.3s ease;
+		}
+
+		.logout-btn:hover {
+			background-color: #ff1493;
+		}
+
+		.icon {
+			font-size: 16px;
+			display: flex;
+			align-items: center;
+			gap: 5px;
+			cursor: pointer;
+			color: #000;
+			text-decoration: none;
+		}
+
+		.icon:hover {
+			color: #d6006e;
+		}
+
+
+
+
+		/* General nav styling */
+		.nav {
+			display: flex;
+			justify-content: center;
+			gap: 40px;
+			background-color: #ffe6f0;
+			/* soft pastel background */
+			padding: 15px 0;
+			font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+			border-radius: 30px;
+			box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+		}
+
+		/* Link styles */
+		.nav a {
+			text-decoration: none;
+			color: #ff1493;
+			/* hot pink */
+			font-size: 18px;
+			font-weight: 500;
+			transition: all 0.3s ease;
+			position: relative;
+		}
+
+		/* Hover effect */
+		.nav a:hover {
+			color: black;
+		}
+
+		.nav a::after {
+			content: "";
+			display: block;
+			height: 3px;
+			width: 0;
+			background: #ff1493;
+			transition: 0.3s;
+			margin: auto;
+			border-radius: 10px;
+		}
+
+		.nav a:hover::after {
+			width: 90%;
+		}
+
+		/* Home icon styling */
+		.homebtn {
+			font-size: 22px;
+			vertical-align: middle;
+			margin-right: 5px;
+		}
+
+
+
+		#myVideo {
+			width: 100%;
+			/* or use px like 600px */
+			height: auto;
+			/* keeps aspect ratio */
+			max-width: 100px;
+			/* limits size */
+			border-radius: 1000px;
+			display: block;
+			margin: 20px auto;
+		}
+	</style>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+</head>
+
+<body>
+
+	<!-- Header -->
+	<header class="header">
+		<div class="logo">🌸 SkyCart</div>
+		<input type="text" placeholder="Search for Products" class="search-box">
+		<div class="nav-right">
+
+			<a href="wishlist.html" class="icon">❤️ Wishlist</a>
+			<a href="profile.html" class="icon">👤 Profile</a>
+			<div class="cart">🛒 Cart</div>
+			<button class="logout-btn" onclick="location.href=logout.html">Logout</button>
+		</div>
+	</header>
+
+	<nav class="nav" align="center">
+		<a href="HomePage.html"><i class="fa fa-home homebtn"></i></a>
+		<a href="shopNow.html">shop</a>
+		<a href="product.html">Categories</a>
+		<a href="deals">Deals</a>
+		<a href=about.html>About</a>
+		<a href="Contact.html">Contact</a>
+	</nav>
+	<video autoplay muted loop id="myVideo">
+		<source src="pinky.mp4" type="video/mp4">
+		Your browser does not support HTML5 video.
+	</video>
+
+	<!-- Banner -->
+	<div class="image-wrapper">
+		<a href="Pink and Black Photo Beauty Collection YouTube Channel Art.mp4">
+			<img src="Pink and Black Photo Beauty Collection YouTube Channel Art.mp4" alt="Beauty Banner" class="bunny">
+		</a>
+	</div>
+	<div class="product-grid">
+
+		<div class="product-card">
+			<img src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=400&q=80"
+				alt="Bags" />
+			<div class="product-info">
+				<h3>Bags</h3>
+				<p>499</p>
+				<div class="badges">
+					<span class="badge available">Available</span>
+					<span class="badge personalize">ADD TO CART</span>
+					<span class="badge gift">Gift</span>
+				</div>
+			</div>
+		</div>
+
+		<div class="product-card">
+			<img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80"
+				alt="Sticker Printing" />
+			<div class="product-info">
+				<h3>Sticker Printing</h3>
+				<p>SS001</p>
+				<div class="badges">
+					<span class="badge available">Available</span>
+					<span class="badge printing">ADD TO CART</span>
+				</div>
+			</div>
+		</div>
+
+		<div class="product-card">
+			<img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=400&q=80"
+				alt="T-Shirt Round Neck" />
+			<div class="product-info">
+				<h3>T-Shirt Round Neck</h3>
+				<p>TSR01</p>
+				<div class="badges">
+					<span class="badge available">Available</span>
+					<span class="badge personalize">ADD TO CART</span>
+					<span class="badge gift">Gift</span>
+				</div>
+			</div>
+		</div>
+
+		<div class="product-card">
+			<img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80"
+				alt="Canvas Pouch" />
+			<div class="product-info">
+				<h3>Canvas Pouch</h3>
+				<p>CP001</p>
+				<div class="badges">
+					<span class="badge available">Available</span>
+					<span class="badge personalize">ADD TO CART</span>
+					<span class="badge gift">Gift</span>
+					<span class="badge printing">Printing</span>
+				</div>
+			</div>
+		</div>
+
+	</div>
+	<script>
+		function addToCart(name, price, img) {
+			let cart = JSON.parse(localStorage.getItem("cart")) || [];
+			let existing = cart.find(item => item.name === name);
+
+			if (existing) {
+				existing.qty++;
+			} else {
+				cart.push({name, price, img, qty: 1});
+			}
+
+			localStorage.setItem("cart", JSON.stringify(cart));
+			alert(name + " added to cart!");
+		}
+	</script>
+</body>
+
+</html>
+
+
+
+
+<!-- Footer -->
+<footer
+	style="background-color: black; padding: 30px 20px; color: #333; text-align: center; margin-top: 50px; border-top: 2px solid #ff69b4; font-family: 'Segoe UI', sans-serif;">
+	<div style="max-width: 1200px; margin: auto;">
+		<div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 20px; text-align: left;">
+
+			<!-- About Section -->
+			<div style="flex: 1; min-width: 200px;">
+				<h3 style="color: #ff1493;">About SkyCart</h3>
+				<p style="color:#334;">SkyCart is your one-stop fashion store. We bring you the latest trends in beauty,
+					fashion, and lifestyle. Shop with confidence and elevate your style!</p>
+			</div>
+
+			<!-- Quick Links -->
+			<div style="flex: 1; min-width: 200px;">
+				<h3 style="color: #ff1493;">Quick Links</h3>
+				<ul style="list-style: none; padding: 0;">
+					<li><a href="product.html" style="color: pink; text-decoration: none;">Shop</a></li>
+					<li><a href="about.html" style="color: pink; text-decoration: none;">About Us</a></li>
+					<li><a href="contact.html" style="color: pink; text-decoration: none;">Contact</a></li>
+					<li><a href="wishlist.html" style="color: pink; text-decoration: none;">Wishlist</a></li>
+				</ul>
+			</div>
+
+			<!-- Social Media -->
+			<div style="flex: 1; min-width: 200px;">
+				<h3 style="color: #ff1493;">Follow Us</h3>
+				<p>
+					<a href="#" style="color: #ff1493; margin: 0 10px;"><i class="fab fa-facebook"></i></a>
+					<a href="#" style="color: #ff1493; margin: 0 10px;"><i class="fab fa-instagram"></i></a>
+					<a href="#" style="color: #ff1493; margin: 0 10px;"><i class="fab fa-twitter"></i></a>
+					<a href="#" style="color: #ff1493; margin: 0 10px;"><i class="fab fa-youtube"></i></a>
+				</p>
+			</div>
+
+		</div>
+
+		<hr style="margin: 20px 0; border-color: #ff69b4;">
+
+		<p style="margin: 0;">&copy; 2025 SkyCart. All rights reserved.</p>
+	</div>
+</footer>

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>About Section</title>
+	<style>
+		body {
+			height: 100vh;
+			font-family: Arial, sans-serif;
+			padding: 2rem;
+			display: flex;
+			justify-content: center;
+			background: #fff;
+			background: linear-gradient(135deg, pink, lightblue);
+			perspective: 1000px;
+			/* for 3D perspective */
+		}
+
+		.about-container {
+			display: flex;
+			align-items: center;
+			max-width: 900px;
+			gap: 3rem;
+			transform-style: preserve-3d;
+			animation: fadeSlideIn 1s ease forwards;
+			opacity: 0;
+			transform: translateY(30px);
+		}
+
+		/* Animation for fade and slide in text */
+		@keyframes fadeSlideIn {
+			to {
+				opacity: 1;
+				transform: translateY(0);
+			}
+		}
+
+		.image-wrapper {
+			position: relative;
+			width: 280px;
+			height: 280px;
+			transform-style: preserve-3d;
+			animation: floatRotate 6s ease-in-out infinite alternate;
+		}
+
+		/* Floating 3D rotation animation */
+		@keyframes floatRotate {
+			0% {
+				transform: rotateX(5deg) rotateY(-10deg) translateZ(0);
+				filter: drop-shadow(0 8px 8px rgba(0, 0, 0, 0.1));
+			}
+
+			100% {
+				transform: rotateX(-5deg) rotateY(10deg) translateZ(15px);
+				filter: drop-shadow(0 12px 12px rgba(0, 0, 0, 0.15));
+			}
+		}
+
+		.blob-bg {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 280px;
+			height: 280px;
+			background: #f4b6c2;
+			border-radius: 50% 50% 60% 40% / 40% 50% 60% 50%;
+			z-index: 1;
+			transform-style: preserve-3d;
+			animation: blobPulse 6s ease-in-out infinite alternate;
+		}
+
+		.blob-bg-2 {
+			position: absolute;
+			bottom: 10px;
+			right: 10px;
+			width: 180px;
+			height: 180px;
+			background: #d89bb5;
+			border-radius: 50% 60% 40% 60% / 50% 60% 40% 60%;
+			z-index: 2;
+			transform-style: preserve-3d;
+			animation: blobPulse 6s ease-in-out infinite alternate 0.3s;
+		}
+
+		/* Blob scaling and subtle rotation */
+		@keyframes blobPulse {
+			0% {
+				transform: scale(1) rotateZ(0deg) translateZ(0);
+				opacity: 0.9;
+			}
+
+			100% {
+				transform: scale(1.05) rotateZ(5deg) translateZ(10px);
+				opacity: 1;
+			}
+		}
+
+		.about-image {
+			position: relative;
+			width: 280px;
+			height: 280px;
+			border-radius: 50% 50% 60% 40% / 40% 50% 60% 50%;
+			object-fit: cover;
+			z-index: 3;
+			box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+			transform-style: preserve-3d;
+			animation: imageFloat 6s ease-in-out infinite alternate;
+		}
+
+		/* Image gentle up and down float with perspective */
+		@keyframes imageFloat {
+			0% {
+				transform: translateZ(0) translateY(0);
+				box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+			}
+
+			100% {
+				transform: translateZ(20px) translateY(-10px);
+				box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+			}
+		}
+
+		.about-text {
+			max-width: 480px;
+		}
+
+		.about-text h2 {
+			font-weight: 700;
+			font-size: 1.8rem;
+			margin-bottom: 1rem;
+		}
+
+		.about-text p {
+			font-size: 1rem;
+			color: #444;
+			line-height: 1.5;
+			margin-bottom: 1.2rem;
+		}
+
+		.about-text strong {
+			display: block;
+			margin-bottom: 1rem;
+		}
+
+		.contact {
+			font-weight: 600;
+			color: #b63e56;
+			display: flex;
+			align-items: center;
+			gap: 0.5rem;
+			font-size: 1.1rem;
+		}
+
+		.contact svg {
+			width: 20px;
+			height: 20px;
+			fill: #b63e56;
+		}
+
+		@media (max-width: 700px) {
+			.about-container {
+				flex-direction: column;
+				text-align: center;
+			}
+
+			.about-text {
+				max-width: 100%;
+				font-size: 1.5rem;
+
+			}
+
+			.image-wrapper {
+				margin-bottom: 2rem;
+			}
+		}
+	</style>
+</head>
+
+<body>
+
+	<div class="about-container">
+		<div class="image-wrapper">
+			<div class="blob-bg"></div>
+			<div class="blob-bg-2"></div>
+			<img src=sun.png alt="Woman smiling in pink hoodie" class="about-image" />
+		</div>
+		<div class="about-text">
+			<h2>About us</h2>
+
+			<p>Oh feel if up to till like. He an thing rapid these after going drawn or. Timed she his law the spoil
+				round defer. In surprise concerns informed betrayed he learning is eye. Ignorant formerly so ye
+				friendship.</p>
+			</br><strong>He as spoke avoid given downs money on we. Of properly carriage shutters ye as wandered up
+				repeated moreover.</strong>
+			</br>
+			<div class="contact">
+				</br>
+				<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+					<path
+						d="M6.62 10.79a15.466 15.466 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.21 11.072 11.072 0 003.48.56 1 1 0 011 1v3.33a1 1 0 01-1 1A17.918 17.918 0 013 5a1 1 0 011-1h3.33a1 1 0 011 1 11.07 11.07 0 00.56 3.48 1 1 0 01-.21 1.11z">
+					</path>
+				</svg>
+
+				+1 (234) 567-8910
+			</div>
+		</div>
+	</div>
+
+</body>
+
+</html>
